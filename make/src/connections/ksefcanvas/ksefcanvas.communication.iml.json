@@ -1,0 +1,25 @@
+{
+	"url": "{{if(parameters.environment === 'test', 'https://staging-api.ksefcanvas.pl', 'https://api.ksefcanvas.pl')}}/v1/key",
+	"method": "GET",
+	"headers": {
+		"Authorization": "Bearer {{parameters.apiKey}}"
+	},
+	"response": {
+		"type": "json",
+		"metadata": {
+			"type": "text",
+			"value": "{{body.firm.name}}{{if(body.firm.nip, ' (' + body.firm.nip + ')', '')}}"
+		},
+		"error": {
+			"429": {
+				"message": "[429] Too many requests to KSeF Canvas. Retry after {{get(headers, 'retry-after')}} s."
+			},
+			"message": "[{{statusCode}}] KSeF Canvas did not accept the API key for the {{if(parameters.environment === 'test', 'Test', 'Production')}} environment. kc_live_ keys work with Production, kc_test_ keys with Test. {{body.detail}} (code: {{body.code}})"
+		}
+	},
+	"log": {
+		"sanitize": [
+			"request.headers.authorization"
+		]
+	}
+}

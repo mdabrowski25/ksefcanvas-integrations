@@ -1,0 +1,13 @@
+{
+	"id": "1f2e3d4c-5b6a-4798-8a9b-0c1d2e3f4a5b",
+	"workspaceId": "5f1e2d3c-4b5a-4968-8776-655443322110",
+	"name": "Usługa programistyczna",
+	"unit": "godz.",
+	"netUnitPriceGrosz": 15000,
+	"vatRate": 23,
+	"pkwiu": "62.01.11.0",
+	"detailsJson": null,
+	"isArchived": false,
+	"createdAt": "2026-10-01T08:00:00+00:00",
+	"updatedAt": "2026-10-01T08:00:00+00:00"
+}

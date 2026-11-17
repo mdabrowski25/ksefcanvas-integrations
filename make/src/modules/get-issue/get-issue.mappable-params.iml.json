@@ -1,0 +1,11 @@
+[
+	{
+		"name": "issueId",
+		"type": "select",
+		"label": "Issue ID",
+		"required": true,
+		"mode": "edit",
+		"options": "rpc://listIssueOptions",
+		"help": "Issued invoice. Select it or map its issue ID (for example from Issue Invoice in KSeF or a trigger)."
+	}
+]

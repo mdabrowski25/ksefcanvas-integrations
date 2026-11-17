@@ -1,0 +1,27 @@
+[
+	{
+		"name": "issueId",
+		"type": "text",
+		"label": "Issue ID"
+	},
+	{
+		"name": "draftId",
+		"type": "text",
+		"label": "Draft ID"
+	},
+	{
+		"name": "state",
+		"type": "text",
+		"label": "State"
+	},
+	{
+		"name": "replay",
+		"type": "boolean",
+		"label": "Replay"
+	},
+	{
+		"name": "alreadyIssued",
+		"type": "boolean",
+		"label": "Already Issued"
+	}
+]

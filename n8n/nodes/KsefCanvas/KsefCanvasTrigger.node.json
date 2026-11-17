@@ -1,0 +1,14 @@
+{
+	"node": "n8n-nodes-ksefcanvas.ksefCanvasTrigger",
+	"nodeVersion": "1.0",
+	"codexVersion": "1.0",
+	"categories": ["Finance & Accounting"],
+	"resources": {
+		"credentialDocumentation": [
+			{ "url": "https://github.com/mdabrowski25/ksefcanvas-integrations/tree/main/n8n#credentials" }
+		],
+		"primaryDocumentation": [
+			{ "url": "https://github.com/mdabrowski25/ksefcanvas-integrations/tree/main/n8n#readme" }
+		]
+	}
+}

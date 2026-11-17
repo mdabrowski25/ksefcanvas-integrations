@@ -1,0 +1,17 @@
+{
+	"valid": true,
+	"issues": [],
+	"totals": {
+		"netGrosz": 150000,
+		"vatGrosz": 34500,
+		"grossGrosz": 184500,
+		"lines": [
+			{
+				"lineId": "7c6b5a49-3827-4615-9403-f2e1d0c9b8a7",
+				"netGrosz": 150000,
+				"vatGrosz": 34500,
+				"grossGrosz": 184500
+			}
+		]
+	}
+}

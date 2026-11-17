@@ -1,0 +1,14 @@
+{
+	"id": "9a8b7c6d-5e4f-4321-9abc-def012345678",
+	"workspaceId": "5f1e2d3c-4b5a-4968-8776-655443322110",
+	"name": "Odbiorca sp. z o.o.",
+	"nip": "5252248481",
+	"address": "ul. Przykładowa 1",
+	"postalCode": "00-001",
+	"city": "Warszawa",
+	"countryCode": "PL",
+	"detailsJson": null,
+	"isArchived": false,
+	"createdAt": "2026-10-01T08:00:00+00:00",
+	"updatedAt": "2026-10-01T08:00:00+00:00"
+}

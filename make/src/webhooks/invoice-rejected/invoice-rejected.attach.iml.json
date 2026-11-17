@@ -1,0 +1,45 @@
+{
+	"url": "{{if(connection.environment === 'test', 'https://staging-api.ksefcanvas.pl', 'https://api.ksefcanvas.pl')}}/v1/webhooks",
+	"method": "POST",
+	"headers": {
+		"Authorization": "Bearer {{connection.apiKey}}"
+	},
+	"body": {
+		"url": "{{webhook.url}}",
+		"events": [
+			"invoice.rejected"
+		]
+	},
+	"response": {
+		"type": "json",
+		"data": {
+			"externalHookId": "{{body.id}}",
+			"secret": "{{body.secret}}",
+			"apiBase": "{{if(connection.environment === 'test', 'https://staging-api.ksefcanvas.pl', 'https://api.ksefcanvas.pl')}}"
+		},
+		"error": {
+			"401": {
+				"message": "[401] KSeF Canvas did not accept the API key. Check the connection: kc_live_ keys work with Production, kc_test_ keys with Test. {{body.detail}} (code: {{body.code}})"
+			},
+			"403": {
+				"message": "[403] {{if(body.code === 'insufficient_scope', 'The API key cannot register webhooks: it needs the webhooks:write scope. Create a key with it in KSeF Canvas under Ustawienia → Integracje → API.', 'KSeF Canvas refused to register the webhook.')}} {{body.detail}} (code: {{body.code}})"
+			},
+			"409": {
+				"message": "[409] {{if(body.code === 'webhook_limit_reached', 'The firm already has 3 webhook addresses, the most KSeF Canvas allows, counting those its owner added in the app. Remove unused webhooks in KSeF Canvas under Ustawienia → Integracje → API, then create this webhook again.', 'KSeF Canvas cannot register the webhook now.')}} {{body.detail}} (code: {{body.code}})"
+			},
+			"422": {
+				"message": "[422] {{if(body.code === 'legal_acceptance_required', 'The firm owner must first accept the current API terms in KSeF Canvas.', 'KSeF Canvas did not accept the webhook address or events.')}} {{body.detail}} (code: {{body.code}})"
+			},
+			"429": {
+				"message": "[429] Too many requests to KSeF Canvas. Retry after {{get(headers, 'retry-after')}} s."
+			},
+			"message": "[{{statusCode}}] KSeF Canvas did not register the webhook. {{body.detail}} (code: {{body.code}})"
+		}
+	},
+	"log": {
+		"sanitize": [
+			"request.headers.authorization",
+			"response.body.secret"
+		]
+	}
+}

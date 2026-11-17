@@ -1,0 +1,7 @@
+node_modules/
+coverage/
+build/
+*.zip
+# Local auth data for `zapier invoke` (authData_apiKey=kc_test_…): never commit it.
+.env
+.env.*

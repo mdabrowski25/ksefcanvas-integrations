@@ -1,0 +1,11 @@
+[
+	{
+		"name": "draftId",
+		"type": "select",
+		"label": "Draft ID",
+		"required": true,
+		"mode": "edit",
+		"options": "rpc://listDraftOptions",
+		"help": "Draft (szkic). Select a draft or map its ID."
+	}
+]

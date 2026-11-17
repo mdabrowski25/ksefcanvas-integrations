@@ -1,0 +1,22 @@
+{
+	"url": "/v1/issues/{{payload.issueId}}",
+	"method": "GET",
+	"response": {
+		"output": {
+			"eventId": "{{payload.eventId}}",
+			"eventType": "{{payload.eventType}}",
+			"livemode": "{{payload.livemode}}",
+			"createdAt": "{{payload.createdAt}}",
+			"issueId": "{{payload.issueId}}",
+			"draftId": "{{payload.draftId}}",
+			"invoiceNumber": "{{payload.invoiceNumber}}",
+			"state": "{{payload.state}}",
+			"ksefNumber": "{{payload.ksefNumber}}",
+			"rejection": "{{payload.rejection}}",
+			"issue": "{{body}}"
+		},
+		"error": {
+			"message": "{{ksefErrorMessage(statusCode, body, get(headers, 'retry-after'), 'invoices:read')}}"
+		}
+	}
+}

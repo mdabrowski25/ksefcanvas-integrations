@@ -1,0 +1,41 @@
+[
+	{
+		"url": "{{ifempty(webhook.apiBase, if(connection.environment === 'test', 'https://staging-api.ksefcanvas.pl', 'https://api.ksefcanvas.pl'))}}/v1/webhooks",
+		"method": "GET",
+		"headers": {
+			"Authorization": "Bearer {{connection.apiKey}}"
+		},
+		"response": {
+			"type": "json",
+			"temp": {
+				"exists": "{{contains(map(body.items, 'id'), webhook.externalHookId)}}"
+			},
+			"error": {
+				"message": "[{{statusCode}}] KSeF Canvas did not list the webhooks to remove this one. {{body.detail}} (code: {{body.code}})"
+			}
+		},
+		"log": {
+			"sanitize": [
+				"request.headers.authorization"
+			]
+		}
+	},
+	{
+		"condition": "{{temp.exists === true}}",
+		"url": "{{ifempty(webhook.apiBase, if(connection.environment === 'test', 'https://staging-api.ksefcanvas.pl', 'https://api.ksefcanvas.pl'))}}/v1/webhooks/{{webhook.externalHookId}}",
+		"method": "DELETE",
+		"headers": {
+			"Authorization": "Bearer {{connection.apiKey}}"
+		},
+		"response": {
+			"error": {
+				"message": "[{{statusCode}}] KSeF Canvas did not remove the webhook. {{body.detail}}"
+			}
+		},
+		"log": {
+			"sanitize": [
+				"request.headers.authorization"
+			]
+		}
+	}
+]

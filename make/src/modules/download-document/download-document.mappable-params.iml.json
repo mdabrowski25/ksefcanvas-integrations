@@ -1,0 +1,33 @@
+[
+	{
+		"name": "issueId",
+		"type": "select",
+		"label": "Issue ID",
+		"required": true,
+		"mode": "edit",
+		"options": "rpc://listIssueOptions",
+		"help": "Issued invoice. Select it or map its issue ID (for example from Issue Invoice in KSeF or a trigger)."
+	},
+	{
+		"name": "documentType",
+		"type": "select",
+		"label": "Document Type",
+		"required": true,
+		"default": "pdf",
+		"help": "Invoice PDF has the KSeF number and QR code; Invoice XML is the FA(3) file sent to KSeF; UPO is KSeF's official receipt (urzędowe poświadczenie odbioru). Ready once KSeF accepted the invoice.",
+		"options": [
+			{
+				"label": "Invoice PDF",
+				"value": "pdf"
+			},
+			{
+				"label": "Invoice XML",
+				"value": "xml"
+			},
+			{
+				"label": "UPO",
+				"value": "upo"
+			}
+		]
+	}
+]

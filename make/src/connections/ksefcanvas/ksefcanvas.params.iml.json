@@ -1,0 +1,26 @@
+[
+	{
+		"name": "apiKey",
+		"type": "password",
+		"label": "API Key",
+		"required": true,
+		"help": "Create a key in KSeF Canvas under Ustawienia → Integracje → API. Triggers need the webhooks:write and invoices:read scopes; issuing invoices needs invoices:issue."
+	},
+	{
+		"name": "environment",
+		"type": "select",
+		"label": "Environment",
+		"required": true,
+		"default": "live",
+		"options": [
+			{
+				"label": "Production",
+				"value": "live"
+			},
+			{
+				"label": "Test (KSeF Test, no legal effect)",
+				"value": "test"
+			}
+		]
+	}
+]

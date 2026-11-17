@@ -1,0 +1,41 @@
+[
+	{
+		"label": "Triggers",
+		"modules": [
+			"invoiceAccepted",
+			"invoiceRejected"
+		]
+	},
+	{
+		"label": "Drafts",
+		"modules": [
+			"createDraft",
+			"getDraft",
+			"validateDraft",
+			"previewDraft",
+			"listDrafts"
+		]
+	},
+	{
+		"label": "Issued Invoices",
+		"modules": [
+			"issueDraft",
+			"getIssue",
+			"downloadDocument",
+			"listIssues"
+		]
+	},
+	{
+		"label": "Clients and Products",
+		"modules": [
+			"findClient",
+			"findProduct"
+		]
+	},
+	{
+		"label": "Other",
+		"modules": [
+			"makeApiCall"
+		]
+	}
+]

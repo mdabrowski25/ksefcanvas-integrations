@@ -1,0 +1,16 @@
+{
+	"baseUrl": "{{if(connection.environment === 'test', 'https://staging-api.ksefcanvas.pl', 'https://api.ksefcanvas.pl')}}",
+	"headers": {
+		"Authorization": "Bearer {{connection.apiKey}}"
+	},
+	"response": {
+		"error": {
+			"message": "{{ksefErrorMessage(statusCode, body, get(headers, 'retry-after'), '')}}"
+		}
+	},
+	"log": {
+		"sanitize": [
+			"request.headers.authorization"
+		]
+	}
+}

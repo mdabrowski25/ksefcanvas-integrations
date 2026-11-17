@@ -1,0 +1,341 @@
+{
+    "fileVersion": 1,
+    "generalCodeFiles": {
+        "base": "general/base.iml.json",
+        "common": null,
+        "readme": "README.md",
+        "groups": "modules/groups.json"
+    },
+    "components": {
+        "connection": {
+            "ksefcanvas": {
+                "label": "KSeF Canvas",
+                "connectionType": "basic",
+                "codeFiles": {
+                    "communication": "connections/ksefcanvas/ksefcanvas.communication.iml.json",
+                    "params": "connections/ksefcanvas/ksefcanvas.params.iml.json",
+                    "common": null
+                }
+            }
+        },
+        "webhook": {
+            "invoiceAccepted": {
+                "label": "Invoice Accepted in KSeF",
+                "webhookType": "web",
+                "connection": "ksefcanvas",
+                "altConnection": null,
+                "codeFiles": {
+                    "communication": "webhooks/invoice-accepted/invoice-accepted.communication.iml.json",
+                    "params": "webhooks/invoice-accepted/invoice-accepted.params.iml.json",
+                    "attach": "webhooks/invoice-accepted/invoice-accepted.attach.iml.json",
+                    "detach": "webhooks/invoice-accepted/invoice-accepted.detach.iml.json",
+                    "update": "webhooks/invoice-accepted/invoice-accepted.update.iml.json",
+                    "requiredScope": "webhooks/invoice-accepted/invoice-accepted.required-scope.iml.json"
+                }
+            },
+            "invoiceRejected": {
+                "label": "Invoice Rejected by KSeF",
+                "webhookType": "web",
+                "connection": "ksefcanvas",
+                "altConnection": null,
+                "codeFiles": {
+                    "communication": "webhooks/invoice-rejected/invoice-rejected.communication.iml.json",
+                    "params": "webhooks/invoice-rejected/invoice-rejected.params.iml.json",
+                    "attach": "webhooks/invoice-rejected/invoice-rejected.attach.iml.json",
+                    "detach": "webhooks/invoice-rejected/invoice-rejected.detach.iml.json",
+                    "update": "webhooks/invoice-rejected/invoice-rejected.update.iml.json",
+                    "requiredScope": "webhooks/invoice-rejected/invoice-rejected.required-scope.iml.json"
+                }
+            }
+        },
+        "module": {
+            "invoiceAccepted": {
+                "label": "Invoice Accepted in KSeF",
+                "description": "Triggers when KSeF accepts an invoice issued in KSeF Canvas. The key needs the webhooks:write and invoices:read scopes.",
+                "moduleType": "instant_trigger",
+                "connection": "ksefcanvas",
+                "altConnection": null,
+                "webhook": "invoiceAccepted",
+                "codeFiles": {
+                    "communication": "modules/invoice-accepted/invoice-accepted.communication.iml.json",
+                    "staticParams": "modules/invoice-accepted/invoice-accepted.static-params.iml.json",
+                    "mappableParams": "modules/invoice-accepted/invoice-accepted.mappable-params.iml.json",
+                    "interface": "modules/invoice-accepted/invoice-accepted.interface.iml.json",
+                    "samples": "modules/invoice-accepted/invoice-accepted.samples.iml.json"
+                }
+            },
+            "invoiceRejected": {
+                "label": "Invoice Rejected by KSeF",
+                "description": "Triggers when KSeF rejects an invoice issued in KSeF Canvas. The key needs the webhooks:write and invoices:read scopes.",
+                "moduleType": "instant_trigger",
+                "connection": "ksefcanvas",
+                "altConnection": null,
+                "webhook": "invoiceRejected",
+                "codeFiles": {
+                    "communication": "modules/invoice-rejected/invoice-rejected.communication.iml.json",
+                    "staticParams": "modules/invoice-rejected/invoice-rejected.static-params.iml.json",
+                    "mappableParams": "modules/invoice-rejected/invoice-rejected.mappable-params.iml.json",
+                    "interface": "modules/invoice-rejected/invoice-rejected.interface.iml.json",
+                    "samples": "modules/invoice-rejected/invoice-rejected.samples.iml.json"
+                }
+            },
+            "createDraft": {
+                "label": "Create Draft",
+                "description": "Creates an invoice draft (szkic). Empty seller fields come from the firm's profile; the invoice number is assigned when the invoice is issued.",
+                "moduleType": "action",
+                "actionCrud": "create",
+                "connection": "ksefcanvas",
+                "altConnection": null,
+                "codeFiles": {
+                    "communication": "modules/create-draft/create-draft.communication.iml.json",
+                    "staticParams": "modules/create-draft/create-draft.static-params.iml.json",
+                    "mappableParams": "modules/create-draft/create-draft.mappable-params.iml.json",
+                    "interface": "modules/create-draft/create-draft.interface.iml.json",
+                    "samples": "modules/create-draft/create-draft.samples.iml.json",
+                    "scope": "modules/create-draft/create-draft.scope.iml.json"
+                }
+            },
+            "getDraft": {
+                "label": "Get Draft",
+                "description": "Returns a draft (szkic) with its line items and totals.",
+                "moduleType": "action",
+                "actionCrud": "read",
+                "connection": "ksefcanvas",
+                "altConnection": null,
+                "codeFiles": {
+                    "communication": "modules/get-draft/get-draft.communication.iml.json",
+                    "staticParams": "modules/get-draft/get-draft.static-params.iml.json",
+                    "mappableParams": "modules/get-draft/get-draft.mappable-params.iml.json",
+                    "interface": "modules/get-draft/get-draft.interface.iml.json",
+                    "samples": "modules/get-draft/get-draft.samples.iml.json",
+                    "scope": "modules/get-draft/get-draft.scope.iml.json"
+                }
+            },
+            "validateDraft": {
+                "label": "Validate Draft",
+                "description": "Checks a draft without issuing it and returns the problems found and the totals.",
+                "moduleType": "action",
+                "actionCrud": "read",
+                "connection": "ksefcanvas",
+                "altConnection": null,
+                "codeFiles": {
+                    "communication": "modules/validate-draft/validate-draft.communication.iml.json",
+                    "staticParams": "modules/validate-draft/validate-draft.static-params.iml.json",
+                    "mappableParams": "modules/validate-draft/validate-draft.mappable-params.iml.json",
+                    "interface": "modules/validate-draft/validate-draft.interface.iml.json",
+                    "samples": "modules/validate-draft/validate-draft.samples.iml.json",
+                    "scope": "modules/validate-draft/validate-draft.scope.iml.json"
+                }
+            },
+            "previewDraft": {
+                "label": "Preview Draft PDF",
+                "description": "Returns the PDF of a draft as it would be issued.",
+                "moduleType": "action",
+                "actionCrud": "read",
+                "connection": "ksefcanvas",
+                "altConnection": null,
+                "codeFiles": {
+                    "communication": "modules/preview-draft/preview-draft.communication.iml.json",
+                    "staticParams": "modules/preview-draft/preview-draft.static-params.iml.json",
+                    "mappableParams": "modules/preview-draft/preview-draft.mappable-params.iml.json",
+                    "interface": "modules/preview-draft/preview-draft.interface.iml.json",
+                    "samples": "modules/preview-draft/preview-draft.samples.iml.json",
+                    "scope": "modules/preview-draft/preview-draft.scope.iml.json"
+                }
+            },
+            "issueDraft": {
+                "label": "Issue Invoice in KSeF",
+                "description": "Sends a draft to KSeF. Irreversible: an invoice accepted by KSeF cannot be withdrawn, only corrected with a correction invoice (faktura korygująca). The key needs the invoices:issue scope.",
+                "moduleType": "action",
+                "actionCrud": "create",
+                "connection": "ksefcanvas",
+                "altConnection": null,
+                "codeFiles": {
+                    "communication": "modules/issue-draft/issue-draft.communication.iml.json",
+                    "staticParams": "modules/issue-draft/issue-draft.static-params.iml.json",
+                    "mappableParams": "modules/issue-draft/issue-draft.mappable-params.iml.json",
+                    "interface": "modules/issue-draft/issue-draft.interface.iml.json",
+                    "samples": "modules/issue-draft/issue-draft.samples.iml.json",
+                    "scope": "modules/issue-draft/issue-draft.scope.iml.json"
+                }
+            },
+            "getIssue": {
+                "label": "Get Issue Status",
+                "description": "Returns the state of an issued invoice: the KSeF number or the reason for rejection.",
+                "moduleType": "action",
+                "actionCrud": "read",
+                "connection": "ksefcanvas",
+                "altConnection": null,
+                "codeFiles": {
+                    "communication": "modules/get-issue/get-issue.communication.iml.json",
+                    "staticParams": "modules/get-issue/get-issue.static-params.iml.json",
+                    "mappableParams": "modules/get-issue/get-issue.mappable-params.iml.json",
+                    "interface": "modules/get-issue/get-issue.interface.iml.json",
+                    "samples": "modules/get-issue/get-issue.samples.iml.json",
+                    "scope": "modules/get-issue/get-issue.scope.iml.json"
+                }
+            },
+            "downloadDocument": {
+                "label": "Download Invoice Document",
+                "description": "Downloads the invoice PDF, the invoice XML or the UPO of an invoice accepted by KSeF.",
+                "moduleType": "action",
+                "actionCrud": "read",
+                "connection": "ksefcanvas",
+                "altConnection": null,
+                "codeFiles": {
+                    "communication": "modules/download-document/download-document.communication.iml.json",
+                    "staticParams": "modules/download-document/download-document.static-params.iml.json",
+                    "mappableParams": "modules/download-document/download-document.mappable-params.iml.json",
+                    "interface": "modules/download-document/download-document.interface.iml.json",
+                    "samples": "modules/download-document/download-document.samples.iml.json",
+                    "scope": "modules/download-document/download-document.scope.iml.json"
+                }
+            },
+            "findClient": {
+                "label": "Find Client",
+                "description": "Searches saved clients (kontrahenci), newest first.",
+                "moduleType": "search",
+                "connection": "ksefcanvas",
+                "altConnection": null,
+                "codeFiles": {
+                    "communication": "modules/find-client/find-client.communication.iml.json",
+                    "staticParams": "modules/find-client/find-client.static-params.iml.json",
+                    "mappableParams": "modules/find-client/find-client.mappable-params.iml.json",
+                    "interface": "modules/find-client/find-client.interface.iml.json",
+                    "samples": "modules/find-client/find-client.samples.iml.json",
+                    "scope": "modules/find-client/find-client.scope.iml.json"
+                }
+            },
+            "findProduct": {
+                "label": "Find Product",
+                "description": "Searches saved products, newest first.",
+                "moduleType": "search",
+                "connection": "ksefcanvas",
+                "altConnection": null,
+                "codeFiles": {
+                    "communication": "modules/find-product/find-product.communication.iml.json",
+                    "staticParams": "modules/find-product/find-product.static-params.iml.json",
+                    "mappableParams": "modules/find-product/find-product.mappable-params.iml.json",
+                    "interface": "modules/find-product/find-product.interface.iml.json",
+                    "samples": "modules/find-product/find-product.samples.iml.json",
+                    "scope": "modules/find-product/find-product.scope.iml.json"
+                }
+            },
+            "listDrafts": {
+                "label": "List Drafts",
+                "description": "Lists drafts (szkice) not issued yet, newest first.",
+                "moduleType": "search",
+                "connection": "ksefcanvas",
+                "altConnection": null,
+                "codeFiles": {
+                    "communication": "modules/list-drafts/list-drafts.communication.iml.json",
+                    "staticParams": "modules/list-drafts/list-drafts.static-params.iml.json",
+                    "mappableParams": "modules/list-drafts/list-drafts.mappable-params.iml.json",
+                    "interface": "modules/list-drafts/list-drafts.interface.iml.json",
+                    "samples": "modules/list-drafts/list-drafts.samples.iml.json",
+                    "scope": "modules/list-drafts/list-drafts.scope.iml.json"
+                }
+            },
+            "listIssues": {
+                "label": "List Issued Invoices",
+                "description": "Lists issued invoices with their KSeF state, newest first.",
+                "moduleType": "search",
+                "connection": "ksefcanvas",
+                "altConnection": null,
+                "codeFiles": {
+                    "communication": "modules/list-issues/list-issues.communication.iml.json",
+                    "staticParams": "modules/list-issues/list-issues.static-params.iml.json",
+                    "mappableParams": "modules/list-issues/list-issues.mappable-params.iml.json",
+                    "interface": "modules/list-issues/list-issues.interface.iml.json",
+                    "samples": "modules/list-issues/list-issues.samples.iml.json",
+                    "scope": "modules/list-issues/list-issues.scope.iml.json"
+                }
+            },
+            "makeApiCall": {
+                "label": "Make an API Call",
+                "description": "Performs an arbitrary authorized API call.",
+                "moduleType": "universal",
+                "connection": "ksefcanvas",
+                "altConnection": null,
+                "codeFiles": {
+                    "communication": "modules/make-api-call/make-api-call.communication.iml.json",
+                    "staticParams": "modules/make-api-call/make-api-call.static-params.iml.json",
+                    "mappableParams": "modules/make-api-call/make-api-call.mappable-params.iml.json",
+                    "interface": "modules/make-api-call/make-api-call.interface.iml.json",
+                    "samples": "modules/make-api-call/make-api-call.samples.iml.json",
+                    "scope": "modules/make-api-call/make-api-call.scope.iml.json"
+                }
+            }
+        },
+        "rpc": {
+            "listDraftOptions": {
+                "label": "List Drafts",
+                "connection": "ksefcanvas",
+                "altConnection": null,
+                "codeFiles": {
+                    "communication": "rpcs/list-draft-options/list-draft-options.communication.iml.json",
+                    "params": "rpcs/list-draft-options/list-draft-options.params.iml.json"
+                }
+            },
+            "listIssueOptions": {
+                "label": "List Issued Invoices",
+                "connection": "ksefcanvas",
+                "altConnection": null,
+                "codeFiles": {
+                    "communication": "rpcs/list-issue-options/list-issue-options.communication.iml.json",
+                    "params": "rpcs/list-issue-options/list-issue-options.params.iml.json"
+                }
+            }
+        },
+        "function": {
+            "ksefErrorMessage": {
+                "codeFiles": {
+                    "code": "functions/ksef-error-message/ksef-error-message.code.js",
+                    "test": "functions/ksef-error-message/ksef-error-message.test.js"
+                }
+            },
+            "ksefDraftData": {
+                "codeFiles": {
+                    "code": "functions/ksef-draft-data/ksef-draft-data.code.js",
+                    "test": "functions/ksef-draft-data/ksef-draft-data.test.js"
+                }
+            },
+            "ksefFileName": {
+                "codeFiles": {
+                    "code": "functions/ksef-file-name/ksef-file-name.code.js",
+                    "test": "functions/ksef-file-name/ksef-file-name.test.js"
+                }
+            },
+            "ksefFindIssue": {
+                "codeFiles": {
+                    "code": "functions/ksef-find-issue/ksef-find-issue.code.js",
+                    "test": "functions/ksef-find-issue/ksef-find-issue.test.js"
+                }
+            },
+            "ksefExistingIssueId": {
+                "codeFiles": {
+                    "code": "functions/ksef-existing-issue-id/ksef-existing-issue-id.code.js",
+                    "test": "functions/ksef-existing-issue-id/ksef-existing-issue-id.test.js"
+                }
+            }
+        },
+        "endpoint": {}
+    },
+    "origins": [
+        {
+            "label": "-FILL-ME- - Example: KSeF Canvas",
+            "baseUrl": "-FILL-ME- - Example: https://eu1.make.com/api - Note: need to select the correct zone eu1, eu2, us1, us2, etc.",
+            "appId": "-FILL-ME- - Place here the app ID of the app created in Make",
+            "appVersion": 1,
+            "idMapping": {
+                "connection": [],
+                "webhook": [],
+                "module": [],
+                "rpc": [],
+                "function": [],
+                "endpoint": []
+            },
+            "apikeyFile": "../.secrets/apikey"
+        }
+    ]
+}

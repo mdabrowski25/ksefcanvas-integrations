@@ -1,0 +1,62 @@
+[
+	{
+		"name": "id",
+		"type": "text",
+		"label": "Issue ID"
+	},
+	{
+		"name": "draftId",
+		"type": "text",
+		"label": "Draft ID"
+	},
+	{
+		"name": "state",
+		"type": "text",
+		"label": "State"
+	},
+	{
+		"name": "invoiceNumber",
+		"type": "text",
+		"label": "Invoice Number"
+	},
+	{
+		"name": "buyerName",
+		"type": "text",
+		"label": "Buyer Name"
+	},
+	{
+		"name": "buyerNip",
+		"type": "text",
+		"label": "Buyer NIP"
+	},
+	{
+		"name": "issueDate",
+		"type": "text",
+		"label": "Issue Date"
+	},
+	{
+		"name": "currency",
+		"type": "text",
+		"label": "Currency"
+	},
+	{
+		"name": "grossGrosz",
+		"type": "integer",
+		"label": "Gross Total (grosz)"
+	},
+	{
+		"name": "ksefNumber",
+		"type": "text",
+		"label": "KSeF Number"
+	},
+	{
+		"name": "createdAt",
+		"type": "date",
+		"label": "Created At"
+	},
+	{
+		"name": "updatedAt",
+		"type": "date",
+		"label": "Updated At"
+	}
+]

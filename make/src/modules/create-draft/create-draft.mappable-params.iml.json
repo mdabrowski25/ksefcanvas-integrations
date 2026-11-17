@@ -1,0 +1,250 @@
+[
+	{
+		"name": "inputMode",
+		"type": "select",
+		"label": "Input Mode",
+		"required": true,
+		"default": "fields",
+		"mappable": false,
+		"help": "Fill in the fields, or send the whole draft as JSON (advanced).",
+		"options": [
+			{
+				"label": "Fields",
+				"value": "fields",
+				"default": true,
+				"nested": [
+					{
+						"name": "buyerName",
+						"type": "text",
+						"label": "Buyer Name",
+						"help": "Buyer (nabywca) name."
+					},
+					{
+						"name": "buyerNip",
+						"type": "text",
+						"label": "Buyer NIP",
+						"help": "Buyer's NIP, 10 digits. Spaces and dashes are removed before sending."
+					},
+					{
+						"name": "buyerAddress",
+						"type": "text",
+						"label": "Buyer Address",
+						"help": "Street, postal code and city."
+					},
+					{
+						"name": "issueDate",
+						"type": "date",
+						"time": false,
+						"label": "Issue Date",
+						"help": "Issue date (data wystawienia). Sent as YYYY-MM-DD in Polish time. Defaults to today."
+					},
+					{
+						"name": "supplyDate",
+						"type": "date",
+						"time": false,
+						"label": "Supply Date",
+						"help": "Supply date (data dostawy lub wykonania usługi). Sent as YYYY-MM-DD in Polish time. Defaults to today."
+					},
+					{
+						"name": "paymentMethod",
+						"type": "select",
+						"label": "Payment Method",
+						"required": true,
+						"default": "Transfer",
+						"help": "Payment method (forma płatności).",
+						"options": [
+							{
+								"label": "Bank Transfer",
+								"value": "Transfer"
+							},
+							{
+								"label": "Cash",
+								"value": "Cash"
+							},
+							{
+								"label": "Card",
+								"value": "Card"
+							},
+							{
+								"label": "Mobile Payment",
+								"value": "Mobile"
+							},
+							{
+								"label": "Credit",
+								"value": "Credit"
+							},
+							{
+								"label": "Cheque",
+								"value": "Cheque"
+							},
+							{
+								"label": "Voucher",
+								"value": "Voucher"
+							},
+							{
+								"label": "Other",
+								"value": "Other"
+							}
+						]
+					},
+					{
+						"name": "paymentDate",
+						"type": "date",
+						"time": false,
+						"label": "Payment Due Date",
+						"help": "Payment due date (termin płatności). Sent as YYYY-MM-DD in Polish time."
+					},
+					{
+						"name": "bankAccount",
+						"type": "text",
+						"label": "Bank Account",
+						"help": "For bank transfer. Defaults to the firm's account."
+					},
+					{
+						"name": "currency",
+						"type": "text",
+						"label": "Currency",
+						"help": "ISO 4217 code, for example PLN or EUR. Defaults to PLN.",
+						"validate": {
+							"pattern": "^[A-Za-z]{3}$"
+						}
+					},
+					{
+						"name": "notes",
+						"type": "text",
+						"multiline": true,
+						"label": "Notes",
+						"help": "Notes (uwagi) printed on the invoice."
+					},
+					{
+						"name": "lines",
+						"type": "array",
+						"label": "Line Items",
+						"required": true,
+						"validate": {
+							"minItems": 1
+						},
+						"help": "Line items (pozycje). At least one.",
+						"labels": {
+							"add": "Add line item"
+						},
+						"spec": {
+							"type": "collection",
+							"label": "Line Item",
+							"spec": [
+								{
+									"name": "name",
+									"type": "text",
+									"label": "Name",
+									"required": true,
+									"help": "Product or service name."
+								},
+								{
+									"name": "quantity",
+									"type": "number",
+									"label": "Quantity",
+									"default": 1,
+									"help": "Decimal. Defaults to 1."
+								},
+								{
+									"name": "unit",
+									"type": "text",
+									"label": "Unit",
+									"default": "szt.",
+									"help": "Defaults to szt."
+								},
+								{
+									"name": "netUnitPrice",
+									"type": "number",
+									"label": "Net Unit Price",
+									"required": true,
+									"help": "Decimal in the invoice currency, for example 123.45. Sent in grosz (value × 100, rounded)."
+								},
+								{
+									"name": "vatRate",
+									"type": "select",
+									"label": "VAT Rate",
+									"default": 23,
+									"help": "Defaults to 23%.",
+									"options": [
+										{
+											"label": "23%",
+											"value": 23
+										},
+										{
+											"label": "8%",
+											"value": 8
+										},
+										{
+											"label": "5%",
+											"value": 5
+										},
+										{
+											"label": "0%",
+											"value": 0
+										},
+										{
+											"label": "Exempt (zw)",
+											"value": -1
+										},
+										{
+											"label": "Reverse Charge (oo)",
+											"value": -2
+										},
+										{
+											"label": "Outside Poland (np I)",
+											"value": -3
+										},
+										{
+											"label": "Outside Poland, Art. 100 (np II)",
+											"value": -4
+										},
+										{
+											"label": "0% Intra-EU Supply (WDT)",
+											"value": -5
+										},
+										{
+											"label": "0% Export",
+											"value": -6
+										}
+									]
+								},
+								{
+									"name": "discountPercent",
+									"type": "number",
+									"label": "Discount (%)",
+									"default": 0,
+									"help": "0–100. Defaults to 0.",
+									"validate": {
+										"min": 0,
+										"max": 100
+									}
+								},
+								{
+									"name": "pkwiu",
+									"type": "text",
+									"label": "PKWiU",
+									"help": "Optional classification code."
+								}
+							]
+						}
+					}
+				]
+			},
+			{
+				"label": "Draft Data (JSON)",
+				"value": "json",
+				"nested": [
+					{
+						"name": "dataJson",
+						"type": "text",
+						"multiline": true,
+						"label": "Draft Data (JSON)",
+						"required": true,
+						"help": "Advanced. A JSON object sent unchanged as the draft's data, with every field of the KSeF Canvas API (for example sellerName, invoiceNumber or ksefOptionsJson). Amounts are integers in grosz, dates YYYY-MM-DD."
+					}
+				]
+			}
+		]
+	}
+]

@@ -1,0 +1,63 @@
+{
+	"name": "n8n-nodes-ksefcanvas",
+	"version": "0.1.0",
+	"description": "n8n nodes for KSeF Canvas: create invoice drafts, issue them in KSeF (the Polish national e-invoicing system) and react when KSeF accepts or rejects an invoice.",
+	"license": "MIT",
+	"homepage": "https://github.com/mdabrowski25/ksefcanvas-integrations/tree/main/n8n#readme",
+	"keywords": [
+		"n8n-community-node-package",
+		"ksef",
+		"ksef-canvas",
+		"e-invoicing",
+		"faktura",
+		"poland"
+	],
+	"author": {
+		"name": "Mateusz Dąbrowski",
+		"email": "support@ksefcanvas.pl",
+		"url": "https://mdab.it"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/mdabrowski25/ksefcanvas-integrations.git",
+		"directory": "n8n"
+	},
+	"engines": {
+		"node": ">=22"
+	},
+	"scripts": {
+		"build": "n8n-node build",
+		"build:watch": "tsc --watch",
+		"dev": "n8n-node dev",
+		"lint": "n8n-node lint",
+		"lint:fix": "n8n-node lint --fix",
+		"test": "n8n-node build && node --test \"test/*.test.js\"",
+		"release": "n8n-node release",
+		"prepublishOnly": "n8n-node prerelease"
+	},
+	"files": [
+		"dist"
+	],
+	"n8n": {
+		"n8nNodesApiVersion": 1,
+		"strict": true,
+		"credentials": [
+			"dist/credentials/KsefCanvasApi.credentials.js"
+		],
+		"nodes": [
+			"dist/nodes/KsefCanvas/KsefCanvas.node.js",
+			"dist/nodes/KsefCanvas/KsefCanvasTrigger.node.js"
+		]
+	},
+	"devDependencies": {
+		"@n8n/node-cli": "0.57.3",
+		"eslint": "9.32.0",
+		"n8n-workflow": "2.16.0",
+		"prettier": "3.6.2",
+		"release-it": "21.1.2",
+		"typescript": "5.9.2"
+	},
+	"peerDependencies": {
+		"n8n-workflow": "*"
+	}
+}

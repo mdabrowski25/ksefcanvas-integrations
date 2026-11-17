@@ -1,0 +1,62 @@
+[
+	{
+		"name": "id",
+		"type": "text",
+		"label": "Client ID"
+	},
+	{
+		"name": "workspaceId",
+		"type": "text",
+		"label": "Firm ID"
+	},
+	{
+		"name": "name",
+		"type": "text",
+		"label": "Name"
+	},
+	{
+		"name": "nip",
+		"type": "text",
+		"label": "NIP"
+	},
+	{
+		"name": "address",
+		"type": "text",
+		"label": "Address"
+	},
+	{
+		"name": "postalCode",
+		"type": "text",
+		"label": "Postal Code"
+	},
+	{
+		"name": "city",
+		"type": "text",
+		"label": "City"
+	},
+	{
+		"name": "countryCode",
+		"type": "text",
+		"label": "Country Code"
+	},
+	{
+		"name": "detailsJson",
+		"type": "text",
+		"label": "Details (JSON)"
+	},
+	{
+		"name": "isArchived",
+		"type": "boolean",
+		"label": "Archived"
+	},
+	{
+		"name": "createdAt",
+		"type": "date",
+		"label": "Created At"
+	},
+	{
+		"name": "updatedAt",
+		"type": "date",
+		"label": "Updated At"
+	}
+]

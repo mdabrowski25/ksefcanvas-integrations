@@ -1,0 +1,13 @@
+{
+	"url": "/v1/drafts",
+	"method": "POST",
+	"body": {
+		"data": "{{ksefDraftData(parameters)}}"
+	},
+	"response": {
+		"output": "{{body}}",
+		"error": {
+			"message": "{{ksefErrorMessage(statusCode, body, get(headers, 'retry-after'), 'drafts:write')}}"
+		}
+	}
+}

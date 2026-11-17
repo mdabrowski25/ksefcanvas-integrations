@@ -1,0 +1,78 @@
+[
+	{
+		"name": "valid",
+		"type": "boolean",
+		"label": "Valid"
+	},
+	{
+		"name": "issues",
+		"type": "array",
+		"label": "Issues",
+		"spec": [
+			{
+				"name": "code",
+				"type": "text",
+				"label": "Code"
+			},
+			{
+				"name": "field",
+				"type": "text",
+				"label": "Field"
+			},
+			{
+				"name": "message",
+				"type": "text",
+				"label": "Message"
+			}
+		]
+	},
+	{
+		"name": "totals",
+		"type": "collection",
+		"label": "Totals",
+		"spec": [
+			{
+				"name": "netGrosz",
+				"type": "integer",
+				"label": "Net Total (grosz)"
+			},
+			{
+				"name": "vatGrosz",
+				"type": "integer",
+				"label": "VAT Total (grosz)"
+			},
+			{
+				"name": "grossGrosz",
+				"type": "integer",
+				"label": "Gross Total (grosz)"
+			},
+			{
+				"name": "lines",
+				"type": "array",
+				"label": "Line Totals",
+				"spec": [
+					{
+						"name": "lineId",
+						"type": "text",
+						"label": "Line ID"
+					},
+					{
+						"name": "netGrosz",
+						"type": "integer",
+						"label": "Net (grosz)"
+					},
+					{
+						"name": "vatGrosz",
+						"type": "integer",
+						"label": "VAT (grosz)"
+					},
+					{
+						"name": "grossGrosz",
+						"type": "integer",
+						"label": "Gross (grosz)"
+					}
+				]
+			}
+		]
+	}
+]

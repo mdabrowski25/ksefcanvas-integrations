@@ -1,0 +1,213 @@
+[
+	{
+		"name": "id",
+		"type": "text",
+		"label": "Draft ID"
+	},
+	{
+		"name": "workspaceId",
+		"type": "text",
+		"label": "Firm ID"
+	},
+	{
+		"name": "version",
+		"type": "uinteger",
+		"label": "Version"
+	},
+	{
+		"name": "state",
+		"type": "text",
+		"label": "State"
+	},
+	{
+		"name": "invoiceNumber",
+		"type": "text",
+		"label": "Invoice Number"
+	},
+	{
+		"name": "sellerName",
+		"type": "text",
+		"label": "Seller Name"
+	},
+	{
+		"name": "sellerNip",
+		"type": "text",
+		"label": "Seller NIP"
+	},
+	{
+		"name": "sellerAddress",
+		"type": "text",
+		"label": "Seller Address"
+	},
+	{
+		"name": "buyerName",
+		"type": "text",
+		"label": "Buyer Name"
+	},
+	{
+		"name": "buyerNip",
+		"type": "text",
+		"label": "Buyer NIP"
+	},
+	{
+		"name": "buyerAddress",
+		"type": "text",
+		"label": "Buyer Address"
+	},
+	{
+		"name": "issueDate",
+		"type": "text",
+		"label": "Issue Date"
+	},
+	{
+		"name": "supplyDate",
+		"type": "text",
+		"label": "Supply Date"
+	},
+	{
+		"name": "paymentDate",
+		"type": "text",
+		"label": "Payment Due Date"
+	},
+	{
+		"name": "paymentMethod",
+		"type": "text",
+		"label": "Payment Method"
+	},
+	{
+		"name": "bankAccount",
+		"type": "text",
+		"label": "Bank Account"
+	},
+	{
+		"name": "currency",
+		"type": "text",
+		"label": "Currency"
+	},
+	{
+		"name": "notes",
+		"type": "text",
+		"label": "Notes"
+	},
+	{
+		"name": "ksefOptionsJson",
+		"type": "text",
+		"label": "KSeF Options (JSON)"
+	},
+	{
+		"name": "lines",
+		"type": "array",
+		"label": "Line Items",
+		"spec": [
+			{
+				"name": "id",
+				"type": "text",
+				"label": "Line ID"
+			},
+			{
+				"name": "draftId",
+				"type": "text",
+				"label": "Draft ID"
+			},
+			{
+				"name": "position",
+				"type": "integer",
+				"label": "Position"
+			},
+			{
+				"name": "name",
+				"type": "text",
+				"label": "Name"
+			},
+			{
+				"name": "quantity",
+				"type": "number",
+				"label": "Quantity"
+			},
+			{
+				"name": "unit",
+				"type": "text",
+				"label": "Unit"
+			},
+			{
+				"name": "netUnitPriceGrosz",
+				"type": "integer",
+				"label": "Net Unit Price (grosz)"
+			},
+			{
+				"name": "discountPercent",
+				"type": "number",
+				"label": "Discount (%)"
+			},
+			{
+				"name": "vatRate",
+				"type": "number",
+				"label": "VAT Rate"
+			},
+			{
+				"name": "pkwiu",
+				"type": "text",
+				"label": "PKWiU"
+			},
+			{
+				"name": "createdAt",
+				"type": "date",
+				"label": "Created At"
+			},
+			{
+				"name": "updatedAt",
+				"type": "date",
+				"label": "Updated At"
+			}
+		]
+	},
+	{
+		"name": "totals",
+		"type": "collection",
+		"label": "Totals",
+		"spec": [
+			{
+				"name": "netGrosz",
+				"type": "integer",
+				"label": "Net Total (grosz)"
+			},
+			{
+				"name": "vatGrosz",
+				"type": "integer",
+				"label": "VAT Total (grosz)"
+			},
+			{
+				"name": "grossGrosz",
+				"type": "integer",
+				"label": "Gross Total (grosz)"
+			},
+			{
+				"name": "lines",
+				"type": "array",
+				"label": "Line Totals",
+				"spec": [
+					{
+						"name": "lineId",
+						"type": "text",
+						"label": "Line ID"
+					},
+					{
+						"name": "netGrosz",
+						"type": "integer",
+						"label": "Net (grosz)"
+					},
+					{
+						"name": "vatGrosz",
+						"type": "integer",
+						"label": "VAT (grosz)"
+					},
+					{
+						"name": "grossGrosz",
+						"type": "integer",
+						"label": "Gross (grosz)"
+					}
+				]
+			}
+		]
+	}
+]

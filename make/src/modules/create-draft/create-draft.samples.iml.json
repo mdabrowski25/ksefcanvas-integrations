@@ -1,0 +1,50 @@
+{
+	"id": "0b9f2c1e-4a5d-4c3b-9f8e-1a2b3c4d5e6f",
+	"workspaceId": "5f1e2d3c-4b5a-4968-8776-655443322110",
+	"version": 2,
+	"state": "Draft",
+	"invoiceNumber": "",
+	"sellerName": "Przykładowy Sprzedawca sp. z o.o.",
+	"sellerNip": "1234563218",
+	"sellerAddress": "ul. Główna 5, 00-950 Warszawa",
+	"buyerName": "Odbiorca sp. z o.o.",
+	"buyerNip": "5252248481",
+	"buyerAddress": "ul. Przykładowa 1, 00-001 Warszawa",
+	"issueDate": "2026-11-17",
+	"supplyDate": "2026-11-17",
+	"paymentDate": "2026-12-01",
+	"paymentMethod": "Transfer",
+	"bankAccount": "61109010140000071219812874",
+	"currency": "PLN",
+	"notes": null,
+	"ksefOptionsJson": "{}",
+	"lines": [
+		{
+			"id": "7c6b5a49-3827-4615-9403-f2e1d0c9b8a7",
+			"draftId": "0b9f2c1e-4a5d-4c3b-9f8e-1a2b3c4d5e6f",
+			"position": 1,
+			"name": "Usługa programistyczna",
+			"quantity": 10,
+			"unit": "godz.",
+			"netUnitPriceGrosz": 15000,
+			"discountPercent": 0,
+			"vatRate": 23,
+			"pkwiu": null,
+			"createdAt": "2026-11-17T09:00:00+00:00",
+			"updatedAt": "2026-11-17T09:00:00+00:00"
+		}
+	],
+	"totals": {
+		"netGrosz": 150000,
+		"vatGrosz": 34500,
+		"grossGrosz": 184500,
+		"lines": [
+			{
+				"lineId": "7c6b5a49-3827-4615-9403-f2e1d0c9b8a7",
+				"netGrosz": 150000,
+				"vatGrosz": 34500,
+				"grossGrosz": 184500
+			}
+		]
+	}
+}

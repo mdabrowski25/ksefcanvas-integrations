@@ -1,0 +1,33 @@
+[
+	{
+		"url": "/v1/issues/{{parameters.issueId}}",
+		"method": "GET",
+		"response": {
+			"temp": {
+				"invoiceNumber": "{{body.invoiceNumber}}"
+			},
+			"error": {
+				"message": "{{ksefErrorMessage(statusCode, body, get(headers, 'retry-after'), 'invoices:read')}}"
+			}
+		}
+	},
+	{
+		"url": "/v1/issues/{{parameters.issueId}}/{{parameters.documentType}}",
+		"method": "GET",
+		"response": {
+			"type": {
+				"200": "binary",
+				"*": "json"
+			},
+			"output": {
+				"fileName": "{{ksefFileName(temp.invoiceNumber, parameters.documentType, parameters.issueId)}}",
+				"data": "{{body}}",
+				"invoiceNumber": "{{temp.invoiceNumber}}",
+				"documentType": "{{parameters.documentType}}"
+			},
+			"error": {
+				"message": "{{ksefErrorMessage(statusCode, body, get(headers, 'retry-after'), 'invoices:read')}}"
+			}
+		}
+	}
+]

@@ -1,0 +1,25 @@
+{
+	"url": "/v1/drafts",
+	"method": "GET",
+	"qs": {
+		"page": 1,
+		"pageSize": 100
+	},
+	"pagination": {
+		"qs": {
+			"page": "{{pagination.page}}"
+		},
+		"condition": "{{body.page * body.pageSize < body.total}}"
+	},
+	"response": {
+		"iterate": "{{body.items}}",
+		"limit": 300,
+		"output": {
+			"label": "{{ifempty(item.buyerName, 'No buyer')}} – {{item.grossGrosz / 100}} {{item.currency}} – {{item.issueDate}}",
+			"value": "{{item.id}}"
+		},
+		"error": {
+			"message": "{{ksefErrorMessage(statusCode, body, get(headers, 'retry-after'), 'invoices:read')}}"
+		}
+	}
+}

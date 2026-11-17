@@ -1,0 +1,26 @@
+{
+	"body": {
+		"items": [
+			{
+				"id": "0b9f2c1e-4a5d-4c3b-9f8e-1a2b3c4d5e6f",
+				"version": 2,
+				"state": "Draft",
+				"invoiceNumber": "",
+				"buyerName": "Odbiorca sp. z o.o.",
+				"buyerNip": "5252248481",
+				"issueDate": "2026-11-17",
+				"currency": "PLN",
+				"grossGrosz": 184500,
+				"createdAt": "2026-11-17T09:00:00+00:00",
+				"updatedAt": "2026-11-17T09:00:00+00:00"
+			}
+		],
+		"page": 1,
+		"pageSize": 25,
+		"total": 1
+	},
+	"headers": {
+		"content-type": "application/json; charset=utf-8"
+	},
+	"statusCode": 200
+}

@@ -1,0 +1,132 @@
+[
+	{
+		"condition": "{{!parameters.version}}",
+		"url": "/v1/drafts/{{parameters.draftId}}",
+		"method": "GET",
+		"response": {
+			"temp": {
+				"version": "{{body.version}}",
+				"alreadyIssued": "{{body.state === 'Queued' || body.state === 'Submitting' || body.state === 'Processing' || body.state === 'Accepted' || body.state === 'ManualReview'}}"
+			},
+			"error": {
+				"message": "{{ksefErrorMessage(statusCode, body, get(headers, 'retry-after'), 'invoices:read')}}"
+			}
+		}
+	},
+	{
+		"condition": "{{temp.alreadyIssued === true}}",
+		"url": "/v1/issues",
+		"method": "GET",
+		"qs": {
+			"page": 1,
+			"pageSize": 100
+		},
+		"response": {
+			"temp": {
+				"found": "{{ksefFindIssue(body.items, parameters.draftId)}}",
+				"more": "{{body.page * body.pageSize < body.total}}"
+			},
+			"error": {
+				"message": "{{ksefErrorMessage(statusCode, body, get(headers, 'retry-after'), 'invoices:read')}}"
+			}
+		}
+	},
+	{
+		"condition": "{{temp.alreadyIssued === true && !temp.found && temp.more === true}}",
+		"url": "/v1/issues",
+		"method": "GET",
+		"qs": {
+			"page": 2,
+			"pageSize": 100
+		},
+		"response": {
+			"temp": {
+				"found": "{{ksefFindIssue(body.items, parameters.draftId)}}",
+				"more": "{{body.page * body.pageSize < body.total}}"
+			},
+			"error": {
+				"message": "{{ksefErrorMessage(statusCode, body, get(headers, 'retry-after'), 'invoices:read')}}"
+			}
+		}
+	},
+	{
+		"condition": "{{temp.alreadyIssued === true && !temp.found && temp.more === true}}",
+		"url": "/v1/issues",
+		"method": "GET",
+		"qs": {
+			"page": 3,
+			"pageSize": 100
+		},
+		"response": {
+			"temp": {
+				"found": "{{ksefFindIssue(body.items, parameters.draftId)}}",
+				"more": "{{body.page * body.pageSize < body.total}}"
+			},
+			"error": {
+				"message": "{{ksefErrorMessage(statusCode, body, get(headers, 'retry-after'), 'invoices:read')}}"
+			}
+		}
+	},
+	{
+		"condition": "{{temp.alreadyIssued === true && !temp.found && temp.more === true}}",
+		"url": "/v1/issues",
+		"method": "GET",
+		"qs": {
+			"page": 4,
+			"pageSize": 100
+		},
+		"response": {
+			"temp": {
+				"found": "{{ksefFindIssue(body.items, parameters.draftId)}}",
+				"more": "{{body.page * body.pageSize < body.total}}"
+			},
+			"error": {
+				"message": "{{ksefErrorMessage(statusCode, body, get(headers, 'retry-after'), 'invoices:read')}}"
+			}
+		}
+	},
+	{
+		"condition": "{{temp.alreadyIssued === true && !temp.found && temp.more === true}}",
+		"url": "/v1/issues",
+		"method": "GET",
+		"qs": {
+			"page": 5,
+			"pageSize": 100
+		},
+		"response": {
+			"temp": {
+				"found": "{{ksefFindIssue(body.items, parameters.draftId)}}",
+				"more": "{{body.page * body.pageSize < body.total}}"
+			},
+			"error": {
+				"message": "{{ksefErrorMessage(statusCode, body, get(headers, 'retry-after'), 'invoices:read')}}"
+			}
+		}
+	},
+	{
+		"condition": {
+			"condition": "{{temp.alreadyIssued !== true}}",
+			"default": {
+				"issueId": "{{ksefExistingIssueId(temp.found, parameters.draftId)}}",
+				"draftId": "{{parameters.draftId}}",
+				"state": "{{temp.found.state}}",
+				"replay": true,
+				"alreadyIssued": true
+			}
+		},
+		"url": "/v1/drafts/{{parameters.draftId}}/issue",
+		"method": "POST",
+		"headers": {
+			"Idempotency-Key": "{{ifempty(parameters.idempotencyKey, parameters.draftId + ':' + ifempty(parameters.version, temp.version))}}"
+		},
+		"body": {
+			"version": "{{ifempty(parameters.version, temp.version)}}"
+		},
+		"response": {
+			"output": "{{body}}",
+			"error": {
+				"message": "{{ksefErrorMessage(statusCode, body, get(headers, 'retry-after'), 'invoices:issue')}}"
+			}
+		}
+	}
+]

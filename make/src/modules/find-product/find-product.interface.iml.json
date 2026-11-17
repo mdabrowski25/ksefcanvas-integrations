@@ -1,0 +1,57 @@
+[
+	{
+		"name": "id",
+		"type": "text",
+		"label": "Product ID"
+	},
+	{
+		"name": "workspaceId",
+		"type": "text",
+		"label": "Firm ID"
+	},
+	{
+		"name": "name",
+		"type": "text",
+		"label": "Name"
+	},
+	{
+		"name": "unit",
+		"type": "text",
+		"label": "Unit"
+	},
+	{
+		"name": "netUnitPriceGrosz",
+		"type": "integer",
+		"label": "Net Unit Price (grosz)"
+	},
+	{
+		"name": "vatRate",
+		"type": "number",
+		"label": "VAT Rate"
+	},
+	{
+		"name": "pkwiu",
+		"type": "text",
+		"label": "PKWiU"
+	},
+	{
+		"name": "detailsJson",
+		"type": "text",
+		"label": "Details (JSON)"
+	},
+	{
+		"name": "isArchived",
+		"type": "boolean",
+		"label": "Archived"
+	},
+	{
+		"name": "createdAt",
+		"type": "date",
+		"label": "Created At"
+	},
+	{
+		"name": "updatedAt",
+		"type": "date",
+		"label": "Updated At"
+	}
+]

@@ -1,0 +1,18 @@
+{
+	"url": "/v1/drafts/{{parameters.draftId}}/preview",
+	"method": "POST",
+	"body": {},
+	"response": {
+		"type": {
+			"200": "binary",
+			"*": "json"
+		},
+		"output": {
+			"fileName": "draft-preview-{{parameters.draftId}}.pdf",
+			"data": "{{body}}"
+		},
+		"error": {
+			"message": "{{ksefErrorMessage(statusCode, body, get(headers, 'retry-after'), 'drafts:write')}}"
+		}
+	}
+}

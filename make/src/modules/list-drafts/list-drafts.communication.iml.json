@@ -1,0 +1,22 @@
+{
+	"url": "/v1/drafts",
+	"method": "GET",
+	"qs": {
+		"page": 1,
+		"pageSize": 100
+	},
+	"pagination": {
+		"qs": {
+			"page": "{{pagination.page}}"
+		},
+		"condition": "{{body.page * body.pageSize < body.total}}"
+	},
+	"response": {
+		"iterate": "{{body.items}}",
+		"output": "{{item}}",
+		"limit": "{{parameters.limit}}",
+		"error": {
+			"message": "{{ksefErrorMessage(statusCode, body, get(headers, 'retry-after'), 'invoices:read')}}"
+		}
+	}
+}

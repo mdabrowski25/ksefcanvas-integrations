@@ -1,0 +1,24 @@
+[
+	{
+		"name": "fileName",
+		"type": "filename",
+		"label": "File Name",
+		"semantic": "file:name"
+	},
+	{
+		"name": "data",
+		"type": "buffer",
+		"label": "Data",
+		"semantic": "file:data"
+	},
+	{
+		"name": "invoiceNumber",
+		"type": "text",
+		"label": "Invoice Number"
+	},
+	{
+		"name": "documentType",
+		"type": "text",
+		"label": "Document Type"
+	}
+]

@@ -1,0 +1,18 @@
+{
+	"name": "ksefcanvas-make",
+	"version": "1.0.0",
+	"private": true,
+	"description": "KSeF Canvas custom app for Make (make.com), as a Make Apps Editor local project",
+	"license": "MIT",
+	"type": "module",
+	"engines": {
+		"node": ">=22"
+	},
+	"scripts": {
+		"test": "node --test \"test/*.test.mjs\"",
+		"deploy": "node scripts/deploy.mjs"
+	},
+	"devDependencies": {
+		"ajv": "8.17.1"
+	}
+}

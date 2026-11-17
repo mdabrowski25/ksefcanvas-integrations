@@ -1,0 +1,15 @@
+{
+	"condition": "{{body.type === 'invoice.accepted'}}",
+	"output": {
+		"eventId": "{{body.id}}",
+		"eventType": "{{body.type}}",
+		"livemode": "{{body.livemode}}",
+		"createdAt": "{{body.createdAt}}",
+		"issueId": "{{body.data.issueId}}",
+		"draftId": "{{body.data.draftId}}",
+		"invoiceNumber": "{{body.data.invoiceNumber}}",
+		"state": "{{body.data.state}}",
+		"ksefNumber": "{{body.data.ksefNumber}}",
+		"rejection": "{{body.data.rejection}}"
+	}
+}

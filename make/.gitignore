@@ -1,0 +1,3 @@
+node_modules/
+# Make API token used by the Make Apps Editor and make-cli (origins[].apikeyFile)
+.secrets/

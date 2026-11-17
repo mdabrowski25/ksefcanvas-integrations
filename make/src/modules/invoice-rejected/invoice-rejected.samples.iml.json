@@ -1,0 +1,30 @@
+{
+	"eventId": "evt_01JD6Z3Q4R5S6T7V8W9X0Y1Z2A",
+	"eventType": "invoice.rejected",
+	"livemode": true,
+	"createdAt": "2026-11-17T10:00:43+00:00",
+	"issueId": "e4d3c2b1-a098-4f7e-8d6c-5b4a39281706",
+	"draftId": "0b9f2c1e-4a5d-4c3b-9f8e-1a2b3c4d5e6f",
+	"invoiceNumber": "FV/2026/11/0042",
+	"state": "Rejected",
+	"ksefNumber": null,
+	"rejection": {
+		"code": "450",
+		"message": "Błąd weryfikacji semantyki dokumentu faktury"
+	},
+	"issue": {
+		"id": "e4d3c2b1-a098-4f7e-8d6c-5b4a39281706",
+		"draftId": "0b9f2c1e-4a5d-4c3b-9f8e-1a2b3c4d5e6f",
+		"state": "Rejected",
+		"invoiceNumber": "FV/2026/11/0042",
+		"ksefNumber": null,
+		"ksefReference": "20261117-SE-0A1B2C3D4E-5F6A7B8C9D-EF",
+		"rejection": {
+			"code": "450",
+			"message": "Błąd weryfikacji semantyki dokumentu faktury"
+		},
+		"documents": [],
+		"createdAt": "2026-11-17T10:00:00+00:00",
+		"updatedAt": "2026-11-17T10:00:42+00:00"
+	}
+}

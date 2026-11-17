@@ -1,0 +1,27 @@
+[
+	{
+		"name": "draftId",
+		"type": "select",
+		"label": "Draft ID",
+		"required": true,
+		"mode": "edit",
+		"options": "rpc://listDraftOptions",
+		"help": "Draft (szkic) to issue. Irreversible: an invoice accepted by KSeF cannot be withdrawn, only corrected with a correction invoice (faktura korygująca). The key needs the invoices:issue scope."
+	},
+	{
+		"name": "version",
+		"type": "uinteger",
+		"label": "Draft Version",
+		"help": "Optional. Map the version from Create Draft or Get Draft so that a retry returns the first result. When empty, the draft's current version is read first; if the draft is already issued, its existing issue is returned instead of issuing again."
+	},
+	{
+		"name": "idempotencyKey",
+		"type": "text",
+		"label": "Idempotency Key",
+		"advanced": true,
+		"validate": {
+			"pattern": "^[A-Za-z0-9._:-]{1,64}$"
+		},
+		"help": "Advanced. Defaults to <draft ID>:<version>, so a retry of the same step returns the first result (replay) instead of a second invoice. Allowed characters: A-Z, a-z, 0-9, \".\", \"_\", \":\" and \"-\", 1–64."
+	}
+]

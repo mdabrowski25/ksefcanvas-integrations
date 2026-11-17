@@ -1,0 +1,19 @@
+[
+	{
+		"name": "q",
+		"type": "text",
+		"label": "Search",
+		"help": "Text to look for in saved clients (kontrahenci), for example a name or NIP. Leave empty to list all."
+	},
+	{
+		"name": "limit",
+		"type": "uinteger",
+		"label": "Limit",
+		"required": true,
+		"default": 10,
+		"validate": {
+			"min": 1
+		},
+		"help": "The maximum number of results to return during one execution cycle."
+	}
+]

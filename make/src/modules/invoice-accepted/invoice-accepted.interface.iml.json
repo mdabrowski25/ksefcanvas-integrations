@@ -1,0 +1,136 @@
+[
+	{
+		"name": "eventId",
+		"type": "text",
+		"label": "Event ID"
+	},
+	{
+		"name": "eventType",
+		"type": "text",
+		"label": "Event Type"
+	},
+	{
+		"name": "livemode",
+		"type": "boolean",
+		"label": "Live Mode"
+	},
+	{
+		"name": "createdAt",
+		"type": "date",
+		"label": "Event Created At"
+	},
+	{
+		"name": "issueId",
+		"type": "text",
+		"label": "Issue ID"
+	},
+	{
+		"name": "draftId",
+		"type": "text",
+		"label": "Draft ID"
+	},
+	{
+		"name": "invoiceNumber",
+		"type": "text",
+		"label": "Invoice Number"
+	},
+	{
+		"name": "state",
+		"type": "text",
+		"label": "State"
+	},
+	{
+		"name": "ksefNumber",
+		"type": "text",
+		"label": "KSeF Number"
+	},
+	{
+		"name": "rejection",
+		"type": "collection",
+		"label": "Rejection",
+		"spec": [
+			{
+				"name": "code",
+				"type": "text",
+				"label": "Code"
+			},
+			{
+				"name": "message",
+				"type": "text",
+				"label": "Message"
+			}
+		]
+	},
+	{
+		"name": "issue",
+		"type": "collection",
+		"label": "Issue",
+		"spec": [
+			{
+				"name": "id",
+				"type": "text",
+				"label": "Issue ID"
+			},
+			{
+				"name": "draftId",
+				"type": "text",
+				"label": "Draft ID"
+			},
+			{
+				"name": "state",
+				"type": "text",
+				"label": "State"
+			},
+			{
+				"name": "invoiceNumber",
+				"type": "text",
+				"label": "Invoice Number"
+			},
+			{
+				"name": "ksefNumber",
+				"type": "text",
+				"label": "KSeF Number"
+			},
+			{
+				"name": "ksefReference",
+				"type": "text",
+				"label": "KSeF Reference"
+			},
+			{
+				"name": "rejection",
+				"type": "collection",
+				"label": "Rejection",
+				"spec": [
+					{
+						"name": "code",
+						"type": "text",
+						"label": "Code"
+					},
+					{
+						"name": "message",
+						"type": "text",
+						"label": "Message"
+					}
+				]
+			},
+			{
+				"name": "documents",
+				"type": "array",
+				"label": "Documents",
+				"spec": {
+					"type": "text"
+				}
+			},
+			{
+				"name": "createdAt",
+				"type": "date",
+				"label": "Created At"
+			},
+			{
+				"name": "updatedAt",
+				"type": "date",
+				"label": "Updated At"
+			}
+		]
+	}
+]

@@ -1,0 +1,10 @@
+{
+	"url": "/v1/issues/{{parameters.issueId}}",
+	"method": "GET",
+	"response": {
+		"output": "{{body}}",
+		"error": {
+			"message": "{{ksefErrorMessage(statusCode, body, get(headers, 'retry-after'), 'invoices:read')}}"
+		}
+	}
+}
