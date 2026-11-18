@@ -6,10 +6,12 @@ public API v1 (`../docs/openapi-v1.json`); the feature set, labels and rules are
 
 ## What it does
 
-Connection: an API key (`kc_live_…` or `kc_test_…`, created in KSeF Canvas under *Ustawienia → Integracje → API*) and
-the environment, **Production** (`https://api.ksefcanvas.pl`, production KSeF) or **Test** (`https://staging-api.ksefcanvas.pl`,
-KSeF Test, no legal effect). The connection test is `GET /v1/key`; the connection is labelled `<firm name> (<NIP>)`, with
-` [Test]` for test keys.
+Connection: an API key (`kc_live_…`, created in KSeF Canvas under *Ustawienia → Integracje → API*). Zapier publishes only
+integrations that use production endpoints, so the app always talks to `https://api.ksefcanvas.pl` (production KSeF) and
+asks for no environment. A private development version can be pointed at the test environment
+(`https://staging-api.ksefcanvas.pl`, KSeF Test, no legal effect) with the `KSEFCANVAS_ENVIRONMENT=test` environment
+variable (below). The connection test is `GET /v1/key`; the connection is labelled `<firm name> (<NIP>)`, with ` [Test]`
+for test keys.
 
 | Type | Key | Label | API |
 | --- | --- | --- | --- |
@@ -52,10 +54,11 @@ How it behaves:
   alreadyIssued: true`. A `Rejected` draft is issued again normally.
 - **Files** (preview, PDF, XML, UPO) are stored with `z.stashFile`, named `FV_2026_11_0042.pdf`, `FV_2026_11_0042.xml` or
   `UPO-FV_2026_11_0042.xml`.
-- **Errors**: `application/problem+json` becomes an English summary followed by the API's Polish `detail`, its `code`, the
-  `errors[]` messages (422) and the trace id. 401 becomes an expired-auth error (reconnect, no refresh), 429 a
+- **Errors**: `application/problem+json` becomes an English summary with the API's stable `code`, the `errors[]` fields
+  and their codes (422) and the trace id. Zapier requires English error messages, so the API's Polish `detail` and
+  `errors[].message` are not shown; the trace id finds them in KSeF Canvas support. 401 becomes an expired-auth error (reconnect, no refresh), 429 a
   `ThrottledError` with `Retry-After`, a 403 `insufficient_scope` names the scope the route needs.
-- No runtime dependencies besides `zapier-platform-core`. The API key goes only to the API of the chosen environment.
+- No runtime dependencies besides `zapier-platform-core`. The API key goes only to the KSeF Canvas API.
 
 ## Develop and test
 
@@ -82,7 +85,7 @@ publishing anything. Put the auth data in `zapier/.env` (git-ignored):
 
 ```dotenv
 authData_apiKey=kc_test_…
-authData_environment=test
+KSEFCANVAS_ENVIRONMENT=test
 ```
 
 Then, from `zapier/` (`DISABLE_ZAPIER_ANALYTICS=1` stops the CLI from sending usage analytics):
@@ -111,10 +114,11 @@ with, for example, `draft.json`:
 ```
 
 Locally, `invoke` cannot run REST hook triggers (subscribe, unsubscribe, deliveries), file stashing (`preview_draft`,
-`download_document`) or the function-based connection label. Test those in the Zap editor after a private `push`
-(below): connect with the test key and the Test environment, turn on a Zap with *Invoice Accepted in KSeF* (the address
+`download_document`) or the function-based connection label. Test those in the Zap editor after a private `push` of a
+development version (below) with `npx zapier-platform-cli@19.3.0 env:set <dev version> KSEFCANVAS_ENVIRONMENT=test`
+(never on a version users have): connect with the test key, turn on a Zap with *Invoice Accepted in KSeF* (the address
 appears in KSeF Canvas, marked as added by a key), issue a test invoice, check the Zap run, then turn the Zap off and
-check that the address is gone. The staging API answers webhooks routes only once `/v1/webhooks` is deployed there.
+check that the address is gone.
 
 ## Publishing (owner)
 

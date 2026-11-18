@@ -2,10 +2,14 @@
 
 const App = require('../index');
 const samples = require('../lib/samples');
-const { LIVE_API, api, appTester, liveAuth, parseError, problem, testAuth } = require('./helpers');
+const { LIVE_API, api, appTester, liveAuth, parseError, problem, testAuth, withEnvironment } = require('./helpers');
 
 describe('authentication', () => {
-  it('tests the key with GET /v1/key on the test environment', async () => {
+  it('asks only for the API key: public versions use production endpoints', () => {
+    expect(App.authentication.fields.map((f) => f.key)).toEqual(['apiKey']);
+  });
+
+  it('tests the key with GET /v1/key on the test environment of a development version', async () => {
     const key = { ...samples.key, prefix: 'kc_test_AbCd', environment: 'test' };
     api().get('/v1/key').reply(200, key);
 
@@ -14,11 +18,11 @@ describe('authentication', () => {
     expect(result.firm.name).toBe('Przykładowa Firma sp. z o.o.');
   });
 
-  it('uses the production API for the live environment and when the environment is empty', async () => {
+  it('uses the production API unless KSEFCANVAS_ENVIRONMENT says otherwise', async () => {
     api(LIVE_API, liveAuth.apiKey).get('/v1/key').twice().reply(200, samples.key);
 
-    await appTester(App.authentication.test, { authData: liveAuth });
-    await appTester(App.authentication.test, { authData: { apiKey: liveAuth.apiKey } });
+    await withEnvironment(undefined, () => appTester(App.authentication.test, { authData: liveAuth }));
+    await withEnvironment('live', () => appTester(App.authentication.test, { authData: liveAuth }));
   });
 
   it('labels the connection with the firm name and NIP, marking test keys', async () => {
@@ -43,14 +47,15 @@ describe('authentication', () => {
     const error = await appTester(App.authentication.test, { authData: testAuth }).catch((e) => e);
 
     expect(error.name).toBe('ExpiredAuthError');
-    expect(error.message).toContain('Use Production for kc_live_ keys and Test for kc_test_ keys');
-    expect(error.message).toContain('KSeF Canvas: Klucz pochodzi z innego środowiska. [api_key_environment_mismatch]');
+    expect(error.message).toContain('Create a production key (kc_live_)');
+    expect(error.message).toContain('[api_key_environment_mismatch]');
+    expect(error.message).not.toContain('Klucz');
     expect(parseError(error).name).not.toBe('RefreshAuthError');
   });
 
-  it('refuses an unknown environment instead of guessing a host', async () => {
-    const error = await appTester(App.authentication.test, { authData: { apiKey: 'kc_test_x', environment: 'dev' } }).catch(
-      (e) => e,
+  it('refuses an unknown KSEFCANVAS_ENVIRONMENT instead of guessing a host', async () => {
+    const error = await withEnvironment('dev', () =>
+      appTester(App.authentication.test, { authData: { apiKey: 'kc_test_x' } }).catch((e) => e),
     );
 
     expect(parseError(error)).toMatchObject({ code: 'invalid_environment' });

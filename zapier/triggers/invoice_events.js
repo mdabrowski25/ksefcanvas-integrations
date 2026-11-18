@@ -2,7 +2,7 @@
 
 // Instant triggers on REST hooks: POST /v1/webhooks when a Zap turns on, DELETE when it turns off.
 
-const { throwForProblem } = require('../lib/http');
+const { environment, throwForProblem } = require('../lib/http');
 const { headerValue, verifySignature } = require('../lib/signature');
 const samples = require('../lib/samples');
 
@@ -114,7 +114,7 @@ const performList = (event, state) => async (z, bundle) => {
   const matching = ((response.data && response.data.items) || []).filter((item) => item.state === state);
   const issues = [];
   for (const summary of matching) issues.push(await fetchIssue(z, summary.id));
-  const livemode = (bundle.authData && bundle.authData.environment) !== 'test';
+  const livemode = environment() !== 'test';
   return issues.map((issue) =>
     toItem(
       {

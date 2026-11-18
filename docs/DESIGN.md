@@ -37,6 +37,11 @@ help texts on every platform. The API's own error `detail` is Polish: show it as
 | apiKey | API Key | Secret. Help: "Create a key in KSeF Canvas under Ustawienia → Integracje → API. Triggers need the webhooks:write and invoices:read scopes; issuing invoices needs invoices:issue." |
 | environment | Environment | `live` "Production" (default) → `https://api.ksefcanvas.pl`; `test` "Test (KSeF Test, no legal effect)" → `https://staging-api.ksefcanvas.pl` |
 
+**Zapier exception.** Zapier publishes only integrations that use production endpoints, and needs every error message in
+English. The Zapier app therefore has no Environment field (a private development version may set
+`KSEFCANVAS_ENVIRONMENT=test`), and its errors show the English summary, `code`, the `errors[]` fields with their codes
+and the trace id, without the Polish `detail`.
+
 Test the connection with `GET /v1/key`. Where the platform shows a connection label, use `{firm.name} ({firm.nip})`.
 
 ### Triggers (instant, REST hooks)

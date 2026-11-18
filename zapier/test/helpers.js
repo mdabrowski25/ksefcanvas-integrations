@@ -12,8 +12,19 @@ const TEST_API = 'https://staging-api.ksefcanvas.pl';
 const LIVE_API = 'https://api.ksefcanvas.pl';
 
 // Fake keys: tests never reach a real KSeF Canvas API (nock blocks every unmatched request).
-const testAuth = { apiKey: 'kc_test_FAKEKEY000000000000', environment: 'test' };
-const liveAuth = { apiKey: 'kc_live_FAKEKEY000000000000', environment: 'live' };
+const testAuth = { apiKey: 'kc_test_FAKEKEY000000000000' };
+const liveAuth = { apiKey: 'kc_live_FAKEKEY000000000000' };
+
+// Runs fn with KSEFCANVAS_ENVIRONMENT set to value (undefined removes it), then restores the test environment.
+const withEnvironment = async (value, fn) => {
+  if (value === undefined) delete process.env.KSEFCANVAS_ENVIRONMENT;
+  else process.env.KSEFCANVAS_ENVIRONMENT = value;
+  try {
+    return await fn();
+  } finally {
+    process.env.KSEFCANVAS_ENVIRONMENT = 'test';
+  }
+};
 const WEBHOOK_SECRET = 'kcwh_fake-secret-for-tests';
 
 const api = (base = TEST_API, key = testAuth.apiKey) =>
@@ -60,6 +71,7 @@ const hookBundle = (body, signature, subscribeData = { id: 'wh-1', secret: WEBHO
 };
 
 module.exports = {
+  withEnvironment,
   LIVE_API,
   TEST_API,
   WEBHOOK_SECRET,

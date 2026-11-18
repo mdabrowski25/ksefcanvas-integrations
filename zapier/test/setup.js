@@ -2,6 +2,9 @@
 
 const nock = require('nock');
 
+// The mocks answer as the KSeF Canvas test environment; tests that need production clear this themselves.
+process.env.KSEFCANVAS_ENVIRONMENT = 'test';
+
 // Jest gives every test file its own nock module, but the HTTP interceptor is process-wide: each file activates its
 // own nock and restores it at the end, so the next file's nock can take over. Never re-enable real connections.
 beforeAll(() => {

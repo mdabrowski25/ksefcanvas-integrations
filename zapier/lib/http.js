@@ -9,24 +9,21 @@ const BASE_URLS = {
 
 const KEYS_PAGE = 'Ustawienia → Integracje → API';
 
-// An empty environment means a connection made before the field existed: production, as in DESIGN.md.
-const baseUrl = (z, authData = {}) => {
-  const environment = authData.environment || 'live';
-  const url = BASE_URLS[environment];
-  if (!url) {
-    throw new z.errors.Error(
-      `Unknown environment "${environment}". Reconnect and choose Production or Test.`,
-      'invalid_environment',
-      400,
-    );
-  }
+// Zapier publishes only integrations that use production endpoints, so users never choose an environment. A private
+// development version can use the KSeF Canvas test environment: `zapier env:set <version> KSEFCANVAS_ENVIRONMENT=test`.
+const environment = () => process.env.KSEFCANVAS_ENVIRONMENT || 'live';
+
+const baseUrl = (z) => {
+  const name = environment();
+  const url = BASE_URLS[name];
+  if (!url) throw new z.errors.Error(`Unknown KSEFCANVAS_ENVIRONMENT "${name}": use live or test.`, 'invalid_environment', 400);
   return url;
 };
 
 const addBaseUrlAndAuth = (request, z, bundle) => {
-  const base = baseUrl(z, bundle.authData);
+  const base = baseUrl(z);
   if (request.url.startsWith('/')) request.url = base + request.url;
-  // The key goes only to the API of the chosen environment, never to another host.
+  // The key goes only to the KSeF Canvas API, never to another host.
   const apiKey = bundle.authData && bundle.authData.apiKey;
   if (apiKey && request.url.startsWith(`${base}/`)) {
     request.headers = request.headers || {};
@@ -55,10 +52,10 @@ const requiredScope = (method, url) => {
 const SUMMARIES = {
   api_key_missing: () => 'KSeF Canvas did not receive an API key. Reconnect your KSeF Canvas account.',
   api_key_invalid: () =>
-    'KSeF Canvas did not recognise this API key. Check the key and the environment (Production or Test) and reconnect.',
+    'KSeF Canvas did not recognise this API key. Check the key and reconnect.',
   api_key_revoked: () => `This API key was revoked in KSeF Canvas. Create a new key under ${KEYS_PAGE} and reconnect.`,
   api_key_environment_mismatch: () =>
-    'This API key belongs to the other environment. Use Production for kc_live_ keys and Test for kc_test_ keys, then reconnect.',
+    `This API key belongs to the KSeF Canvas test environment. Create a production key (kc_live_) under ${KEYS_PAGE} and reconnect.`,
   insufficient_scope: ({ scope }) =>
     `This API key does not have the ${scope || 'required'} scope. Create a key with it in KSeF Canvas under ${KEYS_PAGE} and reconnect.`,
   api_unavailable: () => 'The KSeF Canvas API is not switched on for this firm.',
@@ -89,7 +86,7 @@ const SUMMARIES = {
 
 const summaryForStatus = (status) => {
   if (status === 400) return 'KSeF Canvas could not process the request.';
-  if (status === 401) return 'KSeF Canvas did not accept the API key. Check the key and the environment, then reconnect.';
+  if (status === 401) return 'KSeF Canvas did not accept the API key. Check the key, then reconnect.';
   if (status === 403) return 'KSeF Canvas refused this operation.';
   if (status === 404) return 'Not found in KSeF Canvas.';
   if (status === 409) return 'KSeF Canvas cannot do this right now.';
@@ -117,18 +114,15 @@ const readProblem = async (response) => {
   }
 };
 
-// 422 problems carry errors[] of {code, field, message}; ASP.NET's own validation uses {field: [messages]}.
-const errorMessages = (errors) => {
+// 422 problems carry errors[] of {code, field, message}; ASP.NET's own validation uses {field: [messages]}. Zapier needs
+// every error message in English and the API's messages are Polish, so only the fields and their stable codes are shown.
+const errorFields = (errors) => {
   if (Array.isArray(errors)) {
     return errors
-      .filter((e) => e && (e.message || e.code))
-      .map((e) => (e.field ? `${e.field}: ${e.message || e.code}` : e.message || e.code));
+      .filter((e) => e && (e.field || e.code))
+      .map((e) => (e.field && e.code ? `${e.field} (${e.code})` : e.field || e.code));
   }
-  if (errors && typeof errors === 'object') {
-    return Object.entries(errors).flatMap(([field, messages]) =>
-      (Array.isArray(messages) ? messages : [messages]).map((m) => `${field}: ${m}`),
-    );
-  }
+  if (errors && typeof errors === 'object') return Object.keys(errors);
   return [];
 };
 
@@ -136,11 +130,9 @@ const describeProblem = (status, problem, request = {}) => {
   const code = typeof problem.code === 'string' && problem.code ? problem.code : `http_${status}`;
   const summarize = SUMMARIES[code];
   const summary = summarize ? summarize({ scope: requiredScope(request.method, request.url) }) : summaryForStatus(status);
-  const parts = [summary];
-  if (problem.detail) parts.push(`KSeF Canvas: ${problem.detail} [${code}]`);
-  else parts.push(`[${code}]`);
-  const details = errorMessages(problem.errors);
-  if (details.length) parts.push(`Details: ${details.map((d) => (/[.!?]$/.test(d) ? d : `${d}.`)).join(' ')}`);
+  const parts = [`${summary} [${code}]`];
+  const fields = errorFields(problem.errors);
+  if (fields.length) parts.push(`Fields: ${fields.join(', ')}.`);
   if (problem.traceId) parts.push(`Trace ID: ${problem.traceId}.`);
   return { code, message: parts.join(' ') };
 };
@@ -173,6 +165,7 @@ module.exports = {
   addBaseUrlAndAuth,
   baseUrl,
   describeProblem,
+  environment,
   handleProblems,
   requiredScope,
   throwForProblem,

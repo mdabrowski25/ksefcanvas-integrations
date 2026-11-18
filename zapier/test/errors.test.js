@@ -7,7 +7,7 @@ const { api, appTester, parseError, problem, testAuth } = require('./helpers');
 const createDraft = (inputData) => appTester(App.creates.create_draft.operation.perform, { authData: testAuth, inputData });
 
 describe('error mapping', () => {
-  it('shows an English summary, the Polish detail, the code and every errors[] message for 422', async () => {
+  it('shows an English summary, the code and every errors[] field and code for 422, never the Polish text', async () => {
     api()
       .post('/v1/drafts')
       .reply(
@@ -23,8 +23,7 @@ describe('error mapping', () => {
 
     expect(error).toMatchObject({ name: 'AppError', code: 'validation_failed', status: 422 });
     expect(error.message).toBe(
-      'KSeF Canvas rejected the data. KSeF Canvas: Szkic zawiera błędy. [validation_failed] ' +
-        'Details: data.buyerNip: NIP nabywcy jest nieprawidłowy. data.lines: Dodaj co najmniej jedną pozycję. ' +
+      'KSeF Canvas rejected the data. [validation_failed] Fields: data.buyerNip (invalid_nip), data.lines (required). ' +
         'Trace ID: 00-trace-01.',
     );
   });
@@ -36,7 +35,8 @@ describe('error mapping', () => {
 
     expect(error).toMatchObject({ code: 'insufficient_scope', status: 403 });
     expect(error.message).toMatch(/^This API key does not have the drafts:write scope\./);
-    expect(error.message).toContain('Ten klucz nie ma zakresu drafts:write.');
+    expect(error.message).toContain('[insufficient_scope]');
+    expect(error.message).not.toContain('Ten klucz');
   });
 
   it('knows the scope of every route', () => {
@@ -64,7 +64,7 @@ describe('error mapping', () => {
 
     expect(error).toMatchObject({ code: 'webhook_limit_reached', status: 409 });
     expect(error.message).toContain('Remove unused webhooks in KSeF Canvas under Ustawienia → Integracje → API');
-    expect(error.message).toContain('Firma może mieć najwyżej 3 adresy webhooków.');
+    expect(error.message).not.toContain('Firma');
   });
 
   it('turns 429 into a ThrottledError with the Retry-After delay', async () => {
@@ -84,7 +84,8 @@ describe('error mapping', () => {
     const parsed = JSON.parse(error.message);
     expect(parsed.delay).toBe(17);
     expect(parsed.message).toContain('Too many requests to KSeF Canvas.');
-    expect(parsed.message).toContain('Zbyt wiele żądań. [rate_limited]');
+    expect(parsed.message).toContain('[rate_limited]');
+    expect(parsed.message).not.toContain('Zbyt');
   });
 
   it('falls back to a status summary for unknown codes and non-JSON bodies', async () => {

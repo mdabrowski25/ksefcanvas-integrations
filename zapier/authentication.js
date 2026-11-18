@@ -7,7 +7,7 @@ const test = async (z) => {
   return response.data;
 };
 
-// "{firm.name} ({firm.nip})", marked when the key is for the test environment so both connections can be told apart.
+// "{firm.name} ({firm.nip})", marked when a development version uses a test key, so both connections can be told apart.
 const connectionLabel = (z, bundle) => {
   const key = bundle.inputData || {};
   const firm = key.firm || {};
@@ -26,20 +26,6 @@ module.exports = {
       helpText:
         `Create a key in KSeF Canvas under ${KEYS_PAGE}. ` +
         'Triggers need the webhooks:write and invoices:read scopes; issuing invoices needs invoices:issue.',
-    },
-    {
-      key: 'environment',
-      label: 'Environment',
-      type: 'string',
-      required: true,
-      default: 'live',
-      choices: [
-        { value: 'live', label: 'Production', sample: 'live' },
-        { value: 'test', label: 'Test (KSeF Test, no legal effect)', sample: 'test' },
-      ],
-      helpText:
-        'Production issues real invoices to KSeF and takes kc_live_ keys. ' +
-        'Test sends to KSeF Test, where invoices have no legal effect, and takes kc_test_ keys.',
     },
   ],
   test,
